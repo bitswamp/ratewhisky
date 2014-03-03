@@ -3,9 +3,9 @@ extends layout
 block content
   h1= title
   #filter
-    a.active(href='#') All
+    a.active(href='#', data-filter-class="country") All
     each country, name in whiskies
-      a(href='#') #{name} (#{country.length})
+      a(href='#', data-filter-class="#{name}") #{name} (#{country.length})
   each country, name in whiskies
     section(class="country #{name}") 
       h4 #{name}

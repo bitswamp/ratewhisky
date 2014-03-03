@@ -78,6 +78,8 @@ passport.use(new GoogleStrategy({
     }, function(identifier, profile, done) {
         process.nextTick(function () {
             profile.id = identifier;
+            profile.email = profile.emails[0].value;
+            //console.log(profile);
             done(null, profile);
         });
     }

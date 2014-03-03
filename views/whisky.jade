@@ -3,3 +3,9 @@ extends layout
 block content
   h1= title
   div #{whisky.country}
+  div
+    label(for="notes") Notes
+    textarea(id="notes", name="notes")
+  div
+    label(for="price") Price
+    input(type="text", id="price", name="price")

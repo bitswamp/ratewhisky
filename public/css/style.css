@@ -111,3 +111,6 @@ i.fa {
     font-size: 1.3em;
 }
 
+label {
+    display: block;
+}
