@@ -1,0 +1,27 @@
+doctype html
+html
+  head
+    meta(http-equiv="X-UA-Compatible", content="IE=edge,chrome=1")
+    meta(charset='utf-8')
+    meta(name="HandheldFriendly", content="True")
+    meta(name="MobileOptimized", content="320")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    title= title
+    link(href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css", rel="stylesheet")
+    link(rel='stylesheet', href='/css/style.css')
+  body
+    #nav
+      .menu
+        a#menu(href='#'): i(class="fa fa-bars") Menu
+        a(href='/') Full List
+        a(href='/try') My Try List
+        a(href='/ratings') My Reviews 
+        hr
+        if !user
+          a(href='/auth/google') Login with Google
+        else
+          - var name = user.nickname || user.username || user.email;
+          p #{user.displayName}
+          a(href='/logout') Logout
+    block content
+    script(src='/js/index.js')

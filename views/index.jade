@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  h1= title
+  #filter
+    a.active(href='#') All
+    each country, name in whiskies
+      a(href='#') #{name} (#{country.length})
+  each country, name in whiskies
+    section(class="country #{name}") 
+      h4 #{name}
+      each whisky in country
+        .whisky(id="#{whisky.id}")
+          .name #{whisky.name}
+          .controls
+            a: i(class="fa fa-star")
+            a: i(class="fa fa-plus")
