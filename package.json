@@ -10,6 +10,8 @@
     "jade": "*",
     "sqlite3": "~2.2.0",
     "passport": "~0.2.0",
-    "passport-google": "~0.3.0"
+    "passport-google": "~0.3.0",
+    "redis": "~0.10.1",
+    "hiredis": "~0.1.16"
   }
 }

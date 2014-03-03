@@ -13,5 +13,5 @@ block content
         .whisky(id="#{whisky.id}")
           .name #{whisky.name}
           .controls
-            a: i(class="fa fa-star")
+            a(href="/whisky/#{whisky.id}"): i(class="fa fa-star")
             a: i(class="fa fa-plus")

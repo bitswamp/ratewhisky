@@ -2,7 +2,8 @@ var express = require('express'),
     http = require('http'),
     path = require('path'),
     passport = require('passport'),
-    GoogleStrategy = require('passport-google').Strategy;
+    GoogleStrategy = require('passport-google').Strategy,
+    redis = require('redis').createClient();
 
 var routes = require('./routes');
 var unsorted = require('./whisky.json').whiskies;
@@ -15,9 +16,11 @@ var whiskies = {
     "India": [],
     "France": []
 };
+var whiskiesById = {};
 
 for(var i = 0; i < unsorted.length; i++) {
     whiskies[unsorted[i].country].push(unsorted[i]);
+    whiskiesById[unsorted[i].id] = unsorted[i];
 }
 
 var app = express();
@@ -29,6 +32,8 @@ app.set('view engine', 'jade');
 
 app.set('title', 'Rate Whisky');
 app.set('whiskies', whiskies);
+app.set('whiskiesById', whiskiesById);
+app.set('redis', redis);
 
 app.use(express.favicon());
 app.use(express.logger('short'));
@@ -56,6 +61,7 @@ app.get('/', routes.index);
 app.get('/logout', routes.logout);
 app.get('/try', routes.trylist);
 app.get('/reviews', routes.reviews);
+app.get('/whisky/:id', routes.whisky);
 
 app.get('/auth/google', passport.authenticate('google'));
 app.get('/auth/google/return', passport.authenticate('google', { 

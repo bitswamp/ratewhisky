@@ -27,3 +27,14 @@ exports.reviews = function(req, res) {
         user: req.user 
     });
 };
+
+exports.whisky = function(req, res) {
+    var whiskies = req.app.get("whiskiesById");
+    var whisky = whiskies[req.params.id];
+
+    res.render("whisky", {
+        title: whisky.name,
+        whisky: whisky,
+        user: req.user
+    });
+}
