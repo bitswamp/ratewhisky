@@ -41,9 +41,13 @@ body.menu-open {
     display: block;
 }
 
+#main {
+    margin-left: 0.3em;
+}
+
 h1 {
     font-size: 1.5em;
-    margin: 1.5em 0 0.5em 0.3em;
+    margin: 1.5em 0 0.5em 0;
 }
 
 h4 {
@@ -53,7 +57,7 @@ h4 {
 a {
     display: inline-block;
     margin: 0;
-    margin-left: 0.3em;
+    margin-right: 0.3em;
 }
 
 #filter a {
@@ -70,7 +74,7 @@ a {
 }
 
 .country {
-    padding: 0 0.3em;
+    padding: 0;
 }
 
 .whisky {
@@ -89,11 +93,12 @@ a {
 .controls {
     display: inline-block;
     position: absolute;
-    right: 0.3em;
+    right: 0;
 }
 
 i.fa {
     padding: 0.4em;
+    padding-bottom: 0.3em;
     background-color: #eee;
 }
 
@@ -103,5 +108,6 @@ i.fa {
     left: 100%;
     background-color: #eee;
     margin: 0;
+    font-size: 1.3em;
 }
 

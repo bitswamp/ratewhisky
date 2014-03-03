@@ -12,7 +12,8 @@ html
   body
     #nav
       .menu
-        a#menu(href='#'): i(class="fa fa-bars") Menu
+        a#menu(href='#')
+          i(class="fa fa-bars")
         a(href='/') Full List
         a(href='/try') My Try List
         a(href='/ratings') My Reviews 
@@ -23,5 +24,6 @@ html
           - var name = user.nickname || user.username || user.email;
           p #{user.displayName}
           a(href='/logout') Logout
-    block content
+    #main
+      block content
     script(src='/js/index.js')
