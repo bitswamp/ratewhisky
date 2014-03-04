@@ -111,6 +111,35 @@ i.fa {
     font-size: 1.3em;
 }
 
-label {
+#review {
+    margin-right: 0.3em;
+}
+
+#review label {
     display: block;
+    margin-top: 0.4em;
+    font-size: 0.9em;
+}
+
+#review input, textarea {
+    width: 100%;
+    padding: 0.2em 0.3em;
+    box-sizing: border-box;
+    font-size: 0.8em;
+}
+
+#review textarea {
+    height: 5em;
+    font-family: sans-serif;
+}
+
+#review .fa {
+    font-size: 0.8em;
+}
+#review .fa-star.selected, #review .fa-star.lit {
+    color: yellow;
+}
+
+#review button {
+    padding: 0.3em;
 }

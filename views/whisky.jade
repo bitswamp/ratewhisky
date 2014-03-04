@@ -1,11 +1,19 @@
 extends layout
 
 block content
-  h1= title
-  div #{whisky.country}
-  div
-    label(for="notes") Notes
-    textarea(id="notes", name="notes")
-  div
-    label(for="price") Price
-    input(type="text", id="price", name="price")
+  #review
+    h1= title
+    div.rating
+      label Rating
+      input(type="hidden", id="rating", name="rating")
+      //i.fa.fa-times
+      - for (var i = 0; i < 10; i++)
+        i.fa.fa-star(id="#{i+1}")
+    div.notes
+      label(for="notes") Notes
+      textarea(id="notes", name="notes")
+    div.price
+      label(for="price") Price
+      input(type="text", id="price", name="price")
+    div
+      button#save Save
