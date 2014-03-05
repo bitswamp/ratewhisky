@@ -14,10 +14,13 @@ block content
           .whisky(id="#{whisky.id}")
             .name #{whisky.name}
             .controls
+              - var lit;
               a
-                i.fa.fa-star.edit(data-id=whisky.id)
+                - lit = !!reviews[whisky.id] 
+                i.fa.fa-star.edit(data-id=whisky.id, class=lit?"lit":"")
               a
-                i.fa.fa-plus.add(data-id=whisky.id)
+                - lit = (trylist.indexOf("" + whisky.id) > -1)
+                i.fa.fa-plus.add(data-id=whisky.id, class=lit?"lit":"")
   else 
     h1 Rate Whisky
     #help

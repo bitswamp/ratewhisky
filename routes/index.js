@@ -1,10 +1,31 @@
 exports.index = function(req, res) {
     // show full whisky list with filters
-    res.render("index", { 
-        title: "Rate Whisky - Full List", 
-        user: req.user,
-        whiskies: req.app.get("whiskies")
-    });
+    if (req.user) {
+        var redis = req.app.get("redis");
+        var user = req.user.email;
+
+        redis.hgetall(user + ":reviews", function(err, reviews) {
+            if (!err) {
+                redis.smembers(user + ":trylist", function(err, trylist) {
+                    console.log(reviews);
+                    console.log(trylist);
+                    res.render("index", {
+                        title: "Rate Whisky - Full List", 
+                        user:req.user,
+                        whiskies: req.app.get("whiskies"),
+                        reviews: reviews,
+                        trylist: trylist
+                    });
+                });
+            }
+        });
+    } else {
+        res.render("index", { 
+            title: "Rate Whisky - Full List", 
+            user: null,
+            whiskies: req.app.get("whiskies")
+        });
+    }
 };
 
 exports.logout = function(req, res) {
