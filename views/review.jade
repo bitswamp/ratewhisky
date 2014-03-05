@@ -1,0 +1,18 @@
+#review
+  h1#whiskyName
+  input(type="hidden", id="whiskyId", name="whiskyId")
+  div.rating
+    label Rating
+    input(type="hidden", id="rating", name="rating")
+    //i.fa.fa-times
+    - for (var i = 0; i < 10; i++)
+      i.fa.fa-star(id="#{i+1}")
+  div.notes
+    label(for="notes") Notes
+    textarea(id="notes", name="notes")
+  div.price
+    label(for="price") Price
+    input(type="text", id="price", name="price")
+  div.review-controls
+    button#save Save
+    button#close Close

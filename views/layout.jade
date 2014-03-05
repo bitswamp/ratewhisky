@@ -9,11 +9,13 @@ html
     title= title
     link(href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css", rel="stylesheet")
     link(rel='stylesheet', href='/css/style.css')
+    link(rel='stylesheet', href='/css/original.css')
+    link(rel="icon", href="favicon.ico", type="image/x-icon")
   body
     #nav
       .menu
-        a#menu(href='#')
-          i(class="fa fa-bars")
+        #menu
+          a(href='#'): i.fa.fa-bars
         a(href='/') Full List
         a(href='/try') My Try List
         a(href='/ratings') My Reviews 
@@ -26,4 +28,8 @@ html
           a(href='/logout') Logout
     #main
       block content
-    script(src='/js/index.js')
+    #hidden
+      include review
+    block scripts
+      script(src='/js/humane.min.js')
+      script(src='/js/index.js')

@@ -22,6 +22,10 @@ body.menu-open {
     margin-left: 10em;
 }
 
+#hidden {
+    display: none;
+}
+
 #nav {
     position: fixed;
     height: 100%;
@@ -110,8 +114,12 @@ i.fa {
     margin: 0;
     font-size: 1.3em;
 }
+#menu a {
+    margin: 0;
+}
 
 #review {
+    margin-left: 0.3em;
     margin-right: 0.3em;
 }
 
@@ -142,4 +150,22 @@ i.fa {
 
 #review button {
     padding: 0.3em;
+}
+
+#help .fa {
+    background-color: white;
+}
+
+.lit {
+    color: green !important;
+}
+
+.review-controls button {
+    display: inline-block;
+    margin: 0.5em 0.4em 0 0;
+    padding: 0.3em 0.5em;
+    background-color: #ddd;
+    border: 1px solid #666;
+    border-radius: 10px;
+    font-size: 1.2em;
 }

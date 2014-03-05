@@ -2,18 +2,23 @@ extends layout
 
 block content
   #review
-    h1= title
+    h1= whisky.name
+    input(type="hidden", id="whiskyId", name="whiskyId", value=whisky.id)
     div.rating
       label Rating
-      input(type="hidden", id="rating", name="rating")
+      input(type="hidden", id="rating", name="rating", value=review.rating)
       //i.fa.fa-times
       - for (var i = 0; i < 10; i++)
         i.fa.fa-star(id="#{i+1}")
     div.notes
       label(for="notes") Notes
-      textarea(id="notes", name="notes")
+      textarea(id="notes", name="notes") #{review.notes}
     div.price
       label(for="price") Price
-      input(type="text", id="price", name="price")
+      input(type="text", id="price", name="price", value=review.price)
     div
       button#save Save
+  block append scripts
+    script.
+        var rating = document.getElementsByClassName("rating")[0];
+        setStars(rating, #{review.rating});

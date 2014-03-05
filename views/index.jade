@@ -1,17 +1,25 @@
 extends layout
 
 block content
-  h1= title
-  #filter
-    a.active(href='#', data-filter-class="country") All
+  if (user)
+    h1= title
+    #filter
+      a.active(href='#', data-filter-class="country") All
+      each country, name in whiskies
+        a(href='#', data-filter-class="#{name}") #{name} (#{country.length})
     each country, name in whiskies
-      a(href='#', data-filter-class="#{name}") #{name} (#{country.length})
-  each country, name in whiskies
-    section(class="country #{name}") 
-      h4 #{name}
-      each whisky in country
-        .whisky(id="#{whisky.id}")
-          .name #{whisky.name}
-          .controls
-            a(href="/whisky/#{whisky.id}"): i(class="fa fa-star")
-            a: i(class="fa fa-plus")
+      section(class="country #{name}") 
+        h4 #{name}
+        each whisky in country
+          .whisky(id="#{whisky.id}")
+            .name #{whisky.name}
+            .controls
+              a
+                i.fa.fa-star.edit(data-id=whisky.id)
+              a
+                i.fa.fa-plus.add(data-id=whisky.id)
+  else 
+    h1 Rate Whisky
+    #help
+      i.fa.fa-long-arrow-up
+      | Log in with Google

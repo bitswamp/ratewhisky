@@ -35,7 +35,7 @@ app.set('whiskies', whiskies);
 app.set('whiskiesById', whiskiesById);
 app.set('redis', redis);
 
-app.use(express.favicon());
+app.use(express.favicon(__dirname + '/public/favicon.ico'));
 app.use(express.logger('short'));
 app.use(express.cookieParser());
 app.use(express.compress());
@@ -57,11 +57,22 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+var auth = function(req, res, next) {
+  if (req.isAuthenticated()) { return next(); }
+  req.session.redirectUrl = req.url;
+  res.redirect('/');
+};
+
 app.get('/', routes.index);
 app.get('/logout', routes.logout);
-app.get('/try', routes.trylist);
-app.get('/reviews', routes.reviews);
-app.get('/whisky/:id', routes.whisky);
+app.get('/try', auth, routes.trylist);
+app.get('/reviews', auth, routes.reviews);
+
+app.get('/whisky/:id', auth, routes.whisky);
+app.post('/save/:id', auth, routes.save);
+
+app.post('/add/:id', auth, routes.add);
+app.post('/remove/:id', auth, routes.remove);
 
 app.get('/auth/google', passport.authenticate('google'));
 app.get('/auth/google/return', passport.authenticate('google', { 
