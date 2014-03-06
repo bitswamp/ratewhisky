@@ -18,7 +18,7 @@ html
           a(href='#'): i.fa.fa-bars
         a(href='/') Full List
         a(href='/try') My Try List
-        a(href='/ratings') My Reviews 
+        a(href='/reviews') My Reviews 
         hr
         if !user
           a(href='/auth/google') Login with Google
@@ -31,5 +31,7 @@ html
     #hidden
       include review
     block scripts
+      //- script(src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js")
       script(src='/js/humane.min.js')
       script(src='/js/index.js')
+

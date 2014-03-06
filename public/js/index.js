@@ -81,8 +81,9 @@ function closeReview(e) {
     document.getElementById("main").style.display = "block";
 
     var id = document.getElementById("whiskyId").value;
-    document.getElementById(id).scrollIntoView();
-    window.scrollBy(0, 100);
+    var target = document.getElementById(id).previousSibling;
+    if (target)
+        target.scrollIntoView();
 
     document.getElementById("whiskyName").innerHTML = "";
     document.getElementById("whiskyId").value = "";
@@ -90,21 +91,53 @@ function closeReview(e) {
     document.getElementById("notes").value = "";
     document.getElementById("price").value = "";
     setStars(document.getElementsByClassName("rating")[0], 0);
+
+    var whisky = document.getElementById(id);
+    whisky.addClass("last-selected");
+    window.setTimeout(function() { whisky.removeClass("last-selected") }, 100);
 }
 
 function editReview(id, existing) {
+    var review = {
+        name: document.getElementById(id).children[0].innerHTML,
+        id: id,
+        rating: 0,
+        notes: "",
+        price: ""
+    };
+
     // if review already exists, load it
-    var name = document.getElementById(id).children[0].innerHTML;
-    var score = 0;
+    if (existing) {
+        var ajax = new XMLHttpRequest();
 
-    document.getElementById("whiskyName").innerHTML = name;
-    document.getElementById("whiskyId").value = id;
-    document.getElementById("rating").value = score;
+        //humane.log("Loading review");
 
-    document.getElementById("notes").value = "";
-    document.getElementById("price").value = "";
+        ajax.onreadystatechange = function() {
+            if (ajax.readyState === 4 && ajax.status === 200) {
+                review = JSON.parse(ajax.response);
+                showReview(review);
+            } else if (ajax.readyState === 4 && ajax.status != 200) {
+                humane.log("Error loading existing review");
+                showReview(review);
+            }
+        }
 
-    setStars(document.getElementsByClassName("rating")[0], score);
+        ajax.open("GET", "/review/" + id, true);
+        ajax.send();
+    } else {
+        showReview(review);
+    }
+}
+
+function showReview(review) {
+    document.getElementById("whiskyName").innerHTML = review.name;
+    document.getElementById("whiskyId").value = review.id;
+    document.getElementById("rating").value = review.rating;
+
+    document.getElementById("notes").value = review.notes;
+    document.getElementById("price").value = review.price;
+
+    setStars(document.getElementsByClassName("rating")[0], review.rating);
 
     document.getElementById("main").style.display = "none";
     document.getElementById("hidden").style.display = "block";
@@ -149,6 +182,41 @@ function removeFromTryList(id, removeFromDom) {
     ajax.send();
 }
 
+function filterByCountry(filterValue) {
+    sections = document.getElementsByTagName("section");
+    for (var i = 0; i < sections.length; i++) {
+        if (sections[i].className.indexOf(filterValue) > -1)
+            sections[i].style.display = "block";
+        else
+            sections[i].style.display = "none";
+    }
+}
+
+function filterByReview(filterValue) {
+    if (filterValue === "all") {
+        var whiskies = document.getElementsByClassName("whisky");
+        for (var i = 0; i < whiskies.length; i++) {
+            whiskies[i].style.display = "block";
+        }
+    } else if (filterValue === "unlit") {
+        var reviews = document.getElementsByClassName("edit");
+        for (var i = 0; i < reviews.length; i++) {
+            if (reviews[i].className.indexOf("lit") > -1)
+                reviews[i].parentNode.parentNode.parentNode.style.display = "none";
+            else
+                reviews[i].parentNode.parentNode.parentNode.style.display = "block";
+        }
+    } else if (filterValue === "lit") {
+        var reviews = document.getElementsByClassName("edit");
+        for (var i = 0; i < reviews.length; i++) {
+            if (reviews[i].className.indexOf("lit") === -1)
+                reviews[i].parentNode.parentNode.parentNode.style.display = "none";
+            else
+                reviews[i].parentNode.parentNode.parentNode.style.display = "block";
+        }
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     humane.clickToClose = true;
     humane.timeout = 1000;
@@ -160,20 +228,27 @@ document.addEventListener('DOMContentLoaded', function() {
         body.toggleClass("menu-open");
     });
 
+    var getStarted = document.getElementById("getStarted");
+    if (getStarted) {
+        getStarted.addEventListener("click", function() {
+            body.addClass("menu-open");
+        });
+    }
+
     filter = document.getElementById("filter");
 
     if (filter) {
         filter.addEventListener("click", function(e) {
-            var filterClass, sections, active, i;
+            var filterValue, sections, active;
             if (e.target.tagName.toLowerCase() === "a") {
                 e.preventDefault();
-                filterClass = e.target.getAttribute("data-filter-class");
-                sections = document.getElementsByTagName("section");
-                for (i = 0; i < sections.length; i++) {
-                    if (sections[i].className.indexOf(filterClass) > -1)
-                        sections[i].style.display = "block";
-                    else
-                        sections[i].style.display = "none";
+                filterValue = e.target.getAttribute("data-filter-country");
+                if (filterValue)
+                    filterByCountry(filterValue);
+                else {
+                    filterValue = e.target.getAttribute("data-filter-review");
+                    if (filterValue)
+                        filterByReview(filterValue);
                 }
                 if (e.target.className.indexOf("active") === -1) {
                     active = filter.getElementsByClassName("active");

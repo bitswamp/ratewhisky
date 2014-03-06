@@ -1,31 +1,76 @@
-exports.index = function(req, res) {
-    // show full whisky list with filters
-    if (req.user) {
-        var redis = req.app.get("redis");
-        var user = req.user.email;
+function sortWhiskyByName(a, b) {
+    if (a.name > b.name)
+        return 1;
+    else if (a.name == b.name)
+        return 0;
+    else
+        return -1;
+}
 
-        redis.hgetall(user + ":reviews", function(err, reviews) {
-            if (!err) {
-                redis.smembers(user + ":trylist", function(err, trylist) {
-                    console.log(reviews);
-                    console.log(trylist);
-                    res.render("index", {
-                        title: "Rate Whisky - Full List", 
-                        user:req.user,
-                        whiskies: req.app.get("whiskies"),
-                        reviews: reviews,
-                        trylist: trylist
+exports.index = function(type) {
+    return function(req, res) {
+        var title = "Rate Whisky - Full List";
+        // show full whisky list with filters
+        if (req.user) {
+            var redis = req.app.get("redis");
+            var user = req.user.email;
+
+            redis.hgetall(user + ":reviews", function(err, reviews) {
+                if (!err) {
+                    redis.smembers(user + ":trylist", function(err, trylist) {
+                        //console.log(reviews);
+                        //console.log(trylist);
+
+                        var whiskies = req.app.get("whiskies");
+                        var whiskiesById = req.app.get("whiskiesById");
+
+                        if (type === "reviews" || type === "trylist") {
+                            whiskies = {
+                                "Scotland": [],
+                                "USA": [],
+                                "Canada": [],
+                                "Ireland": [],
+                                "Australia": [],
+                                "France": [],
+                                "India": []
+                            }
+                            if (type === "reviews") {
+                                title = "Rate Whisky - Reviews";
+                                for (var id in reviews)
+                                    if (reviews.hasOwnProperty(id))
+                                        whiskies[whiskiesById[id].country].push(whiskiesById[id]);
+                            } else if (type === "trylist") {
+                                title = "Rate Whisky - Try List";
+                                for (var i = 0; i < trylist.length; i++)
+                                    whiskies[whiskiesById[trylist[i]].country].push(whiskiesById[trylist[i]]);
+                            }
+                            for (var country in whiskies) {
+                                whiskies[country].sort(sortWhiskyByName);
+                            }
+                        }
+
+                        reviews = reviews || {};
+                        trylist = trylist || [];
+
+                        res.render("index", {
+                            title: title, 
+                            type: type,
+                            user:req.user,
+                            whiskies: whiskies,
+                            reviews: reviews,
+                            trylist: trylist
+                        });
                     });
-                });
-            }
-        });
-    } else {
-        res.render("index", { 
-            title: "Rate Whisky - Full List", 
-            user: null,
-            whiskies: req.app.get("whiskies")
-        });
-    }
+                }
+            });
+        } else {
+            res.render("index", { 
+                title: "Rate Whisky - Full List", 
+                user: null,
+                whiskies: req.app.get("whiskies")
+            });
+        }
+    };
 };
 
 exports.logout = function(req, res) {
@@ -74,6 +119,7 @@ exports.whisky = function(req, res) {
 exports.review = function(req, res) {
     var whiskies = req.app.get("whiskiesById");
     var whisky = whiskies[req.params.id];
+    //console.log("whisky: " + whisky.name);
 
     var redis = req.app.get("redis");
     var user = req.user.email;
@@ -85,10 +131,11 @@ exports.review = function(req, res) {
             price: ''
         };
 
-        review = review || empty;
-        review.id = whisky.id;
+        review = review ? JSON.parse(review) : empty;
+        //review.id = whisky.id;
         review.name = whisky.name;
 
+        //console.log("review: " + review);
         res.json(review);
     });
 }
@@ -97,8 +144,8 @@ exports.save = function(req, res) {
     var redis = req.app.get("redis");
     var user = req.user.email;
 
-    console.log(req.params.id);
-    console.log(req.body);
+    //console.log(req.params.id);
+    //console.log(req.body);
 
     var review = {
         id: req.params.id,

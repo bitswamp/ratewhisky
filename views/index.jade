@@ -4,25 +4,36 @@ block content
   if (user)
     h1= title
     #filter
-      a.active(href='#', data-filter-class="country") All
-      each country, name in whiskies
-        a(href='#', data-filter-class="#{name}") #{name} (#{country.length})
+      if (type === "full")
+        a.active(href='#', data-filter-country="country") All
+        each country, name in whiskies
+          a(href='#', data-filter-country="#{name}") #{name} (#{country.length})
+      else if (type === "trylist")
+        a.active(href="#", data-filter-review="all") All
+        a(href="#", data-filter-review="lit") Reviewed
+        a(href="#", data-filter-review="unlit") Not Reviewed
     each country, name in whiskies
-      section(class="country #{name}") 
-        h4 #{name}
-        each whisky in country
-          .whisky(id="#{whisky.id}")
-            .name #{whisky.name}
-            .controls
-              - var lit;
-              a
-                - lit = !!reviews[whisky.id] 
-                i.fa.fa-star.edit(data-id=whisky.id, class=lit?"lit":"")
-              a
-                - lit = (trylist.indexOf("" + whisky.id) > -1)
-                i.fa.fa-plus.add(data-id=whisky.id, class=lit?"lit":"")
+      if country.length
+        section(class="country #{name}") 
+          h4 #{name}
+          each whisky in country
+            .whisky(id="#{whisky.id}")
+              .name #{whisky.name}
+              .controls
+                - var hasReview = !!reviews[whisky.id];
+                - var onTryList = (trylist.indexOf("" + whisky.id) > -1);
+                a
+                  i.fa.fa-star.edit(data-id=whisky.id, class=hasReview?"lit":"")
+                a
+                  if (type === "trylist")
+                    i.fa.fa-times.remove(data-id=whisky.id)
+                  else
+                    i.fa.fa-plus.add(data-id=whisky.id, class=onTryList?"lit":"")
   else 
     h1 Rate Whisky
+    p Use this simple mobile site to save review notes and keep track of whiskies to try at #[a(href="http://www.mynslc.com/Content_MarketingPages/Content_Events/CelebrateWhisky.aspx") Celebrate Whisky 2014].
+    p.alert This personal project is not affiliated with the #[a(href="http://www.mynslc.com/") NSLC]. It uses the list of whiskies available on their site.
     #help
-      i.fa.fa-long-arrow-up
-      | Log in with Google
+      a#getStarted(href="#")
+        i.fa.fa-long-arrow-up
+        | Log in with Google to get started and see the whisky list

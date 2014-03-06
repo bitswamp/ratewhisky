@@ -13,8 +13,8 @@ var whiskies = {
     "Canada": [],
     "Ireland": [],
     "Australia": [],
-    "India": [],
-    "France": []
+    "France": [],
+    "India": []
 };
 var whiskiesById = {};
 
@@ -63,12 +63,13 @@ var auth = function(req, res, next) {
   res.redirect('/');
 };
 
-app.get('/', routes.index);
+app.get('/', routes.index("full"));
+app.get('/try', auth, routes.index("trylist"));
+app.get('/reviews', auth, routes.index("reviews"));
 app.get('/logout', routes.logout);
-app.get('/try', auth, routes.trylist);
-app.get('/reviews', auth, routes.reviews);
 
 app.get('/whisky/:id', auth, routes.whisky);
+app.get('/review/:id', auth, routes.review);
 app.post('/save/:id', auth, routes.save);
 
 app.post('/add/:id', auth, routes.add);
@@ -91,6 +92,7 @@ passport.use(new GoogleStrategy({
             profile.id = identifier;
             profile.email = profile.emails[0].value;
             //console.log(profile);
+            redis.sadd("users", profile.email);
             done(null, profile);
         });
     }

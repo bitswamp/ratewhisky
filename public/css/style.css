@@ -64,6 +64,21 @@ a {
     margin-right: 0.3em;
 }
 
+p a {
+    margin: 0;
+}
+
+p {
+    margin-right: 0.3em;
+}
+
+p.alert {
+    background-color: #ddddff;
+    border: 1px solid blue;
+    color: #444488;
+    padding: 0.4em 0.6em;
+}
+
 #filter a {
     background-color: #eee;
     padding: 0.3em 0.4em;
@@ -83,6 +98,19 @@ a {
 
 .whisky {
     line-height: 2em;
+    -webkit-transition: background-color 1000ms ease-out;
+    -moz-transition: background-color 1000ms ease-out;
+    -o-transition: background-color 1000ms ease-out;
+    -ms-transition: background-color 1000ms ease-out;
+    transition: background-color 1000ms ease-out;
+}
+.last-selected {
+    background-color: #eee;
+    -webkit-transition:background 0s;
+    -moz-transition:background 0s;
+    -ms-transition:background 0s;
+    -o-transition:background 0s;
+    transition:background 0s;
 }
 
 .name {
