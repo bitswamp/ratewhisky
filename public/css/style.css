@@ -14,7 +14,7 @@ body {
     transition: margin 0.5s ease;
     margin: 0;
 
-    font-family: sans-serif;
+    font-family: 'Roboto', sans-serif; /* font */
     font-size: 1.5em;
 }
 
@@ -34,7 +34,7 @@ body.menu-open {
 .menu {
     position: absolute; 
     width: 10em;
-    background-color: #ddd;
+    background-color: #ddd; /* color */
     z-index: 100;
     height: 100%;
     top: 0;
@@ -63,6 +63,9 @@ a {
     margin: 0;
     margin-right: 0.3em;
 }
+a i {
+    cursor: pointer;
+}
 
 p a {
     margin: 0;
@@ -73,14 +76,14 @@ p {
 }
 
 p.alert {
-    background-color: #ddddff;
-    border: 1px solid blue;
-    color: #444488;
+    background-color: #ddddff; /* color */
+    border: 1px solid blue; /* color */
+    color: #444488; /* color */
     padding: 0.4em 0.6em;
 }
 
 #filter a {
-    background-color: #eee;
+    background-color: #eee; /* color */
     padding: 0.3em 0.4em;
     border-radius: 8px;
     margin-bottom: 0.3em;
@@ -88,8 +91,8 @@ p.alert {
 }
 
 #filter a.active {
-    background-color: #3366aa;
-    color: white;
+    background-color: #3366aa; /* color */
+    color: white; /* color */
 }
 
 .country {
@@ -98,14 +101,14 @@ p.alert {
 
 .whisky {
     line-height: 2em;
-    -webkit-transition: background-color 1000ms ease-out;
-    -moz-transition: background-color 1000ms ease-out;
-    -o-transition: background-color 1000ms ease-out;
-    -ms-transition: background-color 1000ms ease-out;
-    transition: background-color 1000ms ease-out;
+    -webkit-transition: background-color 2s ease-out;
+    -moz-transition: background-color 2s ease-out;
+    -o-transition: background-color 2s ease-out;
+    -ms-transition: background-color 2s ease-out;
+    transition: background-color 2s ease-out;
 }
 .last-selected {
-    background-color: #eee;
+    background-color: #eee; /* color */
     -webkit-transition:background 0s;
     -moz-transition:background 0s;
     -ms-transition:background 0s;
@@ -131,14 +134,14 @@ p.alert {
 i.fa {
     padding: 0.4em;
     padding-bottom: 0.3em;
-    background-color: #eee;
+    background-color: #eee; /* color */
 }
 
 #menu {
     position: absolute;
     top: 0;
     left: 100%;
-    background-color: #eee;
+    background-color: #eee; /* color */
     margin: 0;
     font-size: 1.3em;
 }
@@ -162,18 +165,19 @@ i.fa {
     padding: 0.2em 0.3em;
     box-sizing: border-box;
     font-size: 0.8em;
+    font-family: sans-serif;
 }
 
 #review textarea {
     height: 5em;
-    font-family: sans-serif;
 }
 
 #review .fa {
+    cursor: pointer;
     font-size: 0.8em;
 }
 #review .fa-star.selected, #review .fa-star.lit {
-    color: yellow;
+    color: yellow; /* color */
 }
 
 #review button {
@@ -181,19 +185,20 @@ i.fa {
 }
 
 #help .fa {
-    background-color: white;
+    background-color: transparent; /* color */
 }
 
 .lit {
-    color: green !important;
+    color: green; /* color */
 }
 
 .review-controls button {
     display: inline-block;
     margin: 0.5em 0.4em 0 0;
     padding: 0.3em 0.5em;
-    background-color: #ddd;
-    border: 1px solid #666;
+    background-color: #ddd; /* color */
+    border: 1px solid #666; /* color */
     border-radius: 10px;
     font-size: 1.2em;
 }
+
