@@ -1,6 +1,9 @@
 #review
   h1#whiskyName
   input(type="hidden", id="whiskyId", name="whiskyId")
+  div.info
+    div#price-info
+    div#table-info
   div.rating
     label Rating
     input(type="hidden", id="rating", name="rating")
@@ -10,9 +13,9 @@
   div.notes
     label(for="notes") Notes
     textarea(id="notes", name="notes")
-  div.price
+  div.price.hidden
     label(for="price") Price
     input(type="text", id="price", name="price")
   div.review-controls
-    button#save Save
     button#close Close
+    button#save Save

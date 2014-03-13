@@ -134,6 +134,8 @@ exports.review = function(req, res) {
         review = review ? JSON.parse(review) : empty;
         //review.id = whisky.id;
         review.name = whisky.name;
+        review.priceInfo = whisky.price;
+        review.tableInfo = whisky.table;
 
         //console.log("review: " + review);
         res.json(review);

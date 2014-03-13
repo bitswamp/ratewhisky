@@ -17,7 +17,7 @@ block content
         section(class="country #{name}") 
           h4 #{name}
           each whisky in country
-            .whisky(id="#{whisky.id}")
+            .whisky(id=whisky.id, data-price=whisky.price, data-table=whisky.table)
               .name #{whisky.name}
               .controls
                 - var hasReview = !!reviews[whisky.id];

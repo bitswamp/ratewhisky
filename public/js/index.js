@@ -76,6 +76,14 @@ function saveReview(e) {
     //document.getElementById("close").disabled = true;
 }
 
+var clear = function(whisky) { 
+    var clear2 = function() {
+        whisky.removeClass("last-selected");
+    };
+    return clear2;
+};
+
+
 function closeReview(e) {
     document.getElementById("hidden").style.display = "none";
     document.getElementById("main").style.display = "block";
@@ -90,20 +98,27 @@ function closeReview(e) {
     document.getElementById("rating").value = 0;
     document.getElementById("notes").value = "";
     document.getElementById("price").value = "";
+
+    document.getElementById("price-info").innerHTML = "";
+    document.getElementById("table-info").innerHTML = "";
+
     setStars(document.getElementsByClassName("rating")[0], 0);
 
     var whisky = document.getElementById(id);
     whisky.addClass("last-selected");
-    window.setTimeout(function() { whisky.removeClass("last-selected") }, 100);
+    window.setTimeout(clear(whisky), 100);
 }
 
 function editReview(id, existing) {
+    var whisky = document.getElementById(id);
     var review = {
-        name: document.getElementById(id).children[0].innerHTML,
+        name: whisky.children[0].innerHTML,
         id: id,
         rating: 0,
         notes: "",
-        price: ""
+        price: "",
+        priceInfo: whisky.getAttribute("data-price"),
+        tableInfo: whisky.getAttribute("data-table")
     };
 
     // if review already exists, load it
@@ -139,6 +154,11 @@ function showReview(review) {
 
     setStars(document.getElementsByClassName("rating")[0], review.rating);
 
+    if (review.priceInfo)
+        document.getElementById("price-info").innerHTML = "$" + review.priceInfo;
+    if (review.tableInfo)
+        document.getElementById("table-info").innerHTML = "Table " + review.tableInfo;
+
     document.getElementById("main").style.display = "none";
     document.getElementById("hidden").style.display = "block";
 }
@@ -161,8 +181,10 @@ function addToTryList(id) {
 }
 
 function removeFromTryList(id, removeFromDom) {
-    var del = window.confirm("Delete from list?");
-    if (!del) return;
+    if (removeFromDom) {
+        var del = window.confirm("Delete from list?");
+        if (!del) return;
+    }
 
     var ajax = new XMLHttpRequest();
     ajax.onreadystatechange = function() {

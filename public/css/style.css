@@ -14,6 +14,7 @@ body {
     transition: margin 0.5s ease;
     margin: 0;
 
+    color: #222;
     font-family: 'Roboto', sans-serif; /* font */
     font-size: 1.5em;
 }
@@ -22,7 +23,14 @@ body.menu-open {
     margin-left: 10em;
 }
 
-#hidden {
+a {
+    color: #3366aa;
+}
+a:visited {
+    color: #3366aa;
+}
+
+#hidden, .hidden {
     display: none;
 }
 
@@ -34,7 +42,7 @@ body.menu-open {
 .menu {
     position: absolute; 
     width: 10em;
-    background-color: #ddd; /* color */
+    background-color: #ebebeb; /* color */
     z-index: 100;
     height: 100%;
     top: 0;
@@ -43,10 +51,30 @@ body.menu-open {
 
 .menu a {
     display: block;
+    padding: 0.2em 0.4em;
+    text-decoration: none;
+    margin-top: 0.3em;
+}
+.menu a:hover, .menu a:active {
+    background-color: #ddd;
+}
+
+.menu p {
+    margin: 0;
+    padding: 0.2em 0.4em;
+    font-size: 0.8em;
+    word-wrap: break-word;
+}
+.menu hr {
+    height: 1px;
+    border: 0;
+    margin: 12px 0.5em 9px 0.5em;
+    color: #ccc;
+    background-color: #ccc;
 }
 
 #main {
-    margin-left: 0.3em;
+    margin-left: 0.4em;
 }
 
 h1 {
@@ -61,8 +89,21 @@ h4 {
 a {
     display: inline-block;
     margin: 0;
-    margin-right: 0.3em;
+    margin-right: 0.4em;
+    -webkit-transition: background-color 0.5s ease-out;
+    -moz-transition: background-color 0.5s ease-out;
+    -o-transition: background-color 0.5s ease-out;
+    -ms-transition: background-color 0.5s ease-out;
+    transition: background-color 0.5s ease-out;
 }
+a:active, a:hover {
+    -webkit-transition: background-color 0s ease-out;
+    -moz-transition: background-color 0s ease-out;
+    -o-transition: background-color 0s ease-out;
+    -ms-transition: background-color 0s ease-out;
+    transition: background-color 0s ease-out;
+}
+
 a i {
     cursor: pointer;
 }
@@ -72,7 +113,7 @@ p a {
 }
 
 p {
-    margin-right: 0.3em;
+    margin-right: 0.4em;
 }
 
 p.alert {
@@ -83,11 +124,12 @@ p.alert {
 }
 
 #filter a {
-    background-color: #eee; /* color */
+    background-color: #ebebeb; /* color */
     padding: 0.3em 0.4em;
     border-radius: 8px;
     margin-bottom: 0.3em;
     font-size: 0.9em;
+    text-decoration: none;
 }
 
 #filter a.active {
@@ -108,7 +150,7 @@ p.alert {
     transition: background-color 2s ease-out;
 }
 .last-selected {
-    background-color: #eee; /* color */
+    background-color: #ddd; /* color */
     -webkit-transition:background 0s;
     -moz-transition:background 0s;
     -ms-transition:background 0s;
@@ -134,24 +176,29 @@ p.alert {
 i.fa {
     padding: 0.4em;
     padding-bottom: 0.3em;
-    background-color: #eee; /* color */
+    background-color: #ebebeb; /* color */
+}
+.controls i {
+    font-size: 1.1em;
+    padding: 0.2em;
 }
 
 #menu {
     position: absolute;
     top: 0;
     left: 100%;
-    background-color: #eee; /* color */
+    background-color: #ebebeb; /* color */
     margin: 0;
     font-size: 1.3em;
 }
 #menu a {
     margin: 0;
+    padding: 0;
 }
 
 #review {
-    margin-left: 0.3em;
-    margin-right: 0.3em;
+    margin-left: 0.4em;
+    margin-right: 0.4em;
 }
 
 #review label {
@@ -172,33 +219,69 @@ i.fa {
     height: 5em;
 }
 
+i.edit, i.add, i.remove {
+    background-color: transparent;
+    color: #ddd;
+}
+i.edit:hover {
+    color: #FAE98E;
+}
+i.edit.lit {
+    color: #FAD600;
+}
+i.add:hover {
+    color: #A2DAFF;
+}
+i.add.lit {
+    color: #0876FF;
+}
+
+#close {
+    background-color: #ddd;
+}
+
 #review .fa {
     cursor: pointer;
     font-size: 0.8em;
+    background-color: transparent;
+    color: #ddd;
 }
 #review .fa-star.selected, #review .fa-star.lit {
-    color: yellow; /* color */
+    color: #FAD600; /* color */
 }
-
-#review button {
-    padding: 0.3em;
+#review .fa-star:hover {
+    color: #FAE98E;
+}
+.lit {
+    color: #FAD600; /* color */
 }
 
 #help .fa {
     background-color: transparent; /* color */
 }
 
-.lit {
-    color: green; /* color */
-}
-
 .review-controls button {
     display: inline-block;
-    margin: 0.5em 0.4em 0 0;
-    padding: 0.3em 0.5em;
-    background-color: #ddd; /* color */
-    border: 1px solid #666; /* color */
+    margin: 0.5em 0.5em 0 0;
+    padding: 0.4em 0.6em;
+    background-color: #3366bb; /* color */
+    border: 0;
+    color: white;
     border-radius: 10px;
-    font-size: 1.2em;
+    font-size: 1.1em;
 }
 
+.info {
+    margin-bottom: 0.7em;
+    color: #bbb;
+    font-weight: bold;
+}
+
+#price-info {
+    display: inline-block;
+    float: right;
+}
+
+#table-info {
+    display: inline-block;
+}

@@ -24,8 +24,9 @@ html
         if !user
           a(href='/auth/google') Login with Google
         else
-          - var name = user.nickname || user.username || user.email;
-          p #{user.displayName}
+          //- var name = user.nickname || user.username || user.email;
+          
+          p #{user.email}
           a(href='/logout') Logout
     #main
       block content
